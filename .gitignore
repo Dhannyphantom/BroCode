@@ -1,6 +1,3 @@
 out/
-*.wav
-*.jpeg
-*.txt
+assets/
 .idea/
-*.png
