@@ -1,38 +1,29 @@
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 
 public class Main {
-    public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        Scanner scanner = new Scanner(System.in);
-        File musicFile = new File("beat.wav");
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioStream);
+    public static void main(String[] args)  {
 
-        System.out.println("Welcome to Danny Audio Player");
-        System.out.println("Press p: play, s: stop, r; reset, q: quit");
+        Border border = BorderFactory.createLineBorder(Color.green, 3, true);
 
-        String action = scanner.next();
-        action = action.toLowerCase();
-        while (!action.equals("q")) {
-            switch (action) {
-                case "p":
-                    clip.start();
-                    break;
-                 case "s":
-                    clip.stop();
-                    break;
-                case "r":
-                    clip.setMicrosecondPosition(0);
-                    break;
-                default:
-                    clip.close();
-                    System.out.println("Bye");
-            }
-            action = scanner.next();
-        }
+        JLabel label = new JLabel("Danny is the GOAT");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setBackground(Color.BLACK);
+        label.setOpaque(true);
+        label.setBorder(border);
+        label.setForeground(Color.green);
+        label.setFont(new Font("MV Boli", Font.PLAIN, 20));
 
+        ImageIcon icon = new ImageIcon("favicon.png");
+
+        JFrame frame = new JFrame();
+        frame.setSize(800,550);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Danny App");
+        frame.setIconImage(icon.getImage());
+        frame.setMinimumSize(new Dimension(750,500));
+        frame.add(label);
+        frame.setVisible(true);
     }
 }
