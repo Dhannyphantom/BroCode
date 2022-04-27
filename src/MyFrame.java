@@ -1,43 +1,48 @@
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 
 public class MyFrame extends JFrame implements ChangeListener {
     JPanel panel;
-    JSlider slider;
+    JProgressBar progressBar;
     JLabel label;
-    MyFrame() {
+    MyFrame() throws InterruptedException {
 
-        slider = new JSlider();
-        slider.setPaintTicks(true);
-        slider.setMinorTickSpacing(5);
-        slider.setBounds(200,0,60,300);
-        slider.setPaintLabels(true);
-        slider.addChangeListener(this);
-        slider.setOrientation(JSlider.VERTICAL);
-        slider.setMajorTickSpacing(25);
+        progressBar = new JProgressBar();
+        progressBar.setPreferredSize(new Dimension(500,60));
+        progressBar.setMinimum(0);
+        progressBar.setValue(500);
+        progressBar.setMaximum(500);
+        progressBar.addChangeListener(this);
+        progressBar.setBackground(Color.black);
+        progressBar.setForeground(Color.orange);
+        progressBar.setStringPainted(true);
+        progressBar.setFont(new Font("Consolas", Font.BOLD, 30));
+
 
         label = new JLabel();
-        label.setText("C "+slider.getValue());
-        label.setBounds(220,330,100,100);
 
         panel = new JPanel();
-        panel.add(slider);
+        panel.add(progressBar);
         panel.add(label);
-        panel.setLayout(null);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500,500);
         this.add(panel);
         this.setVisible(true);
-    }
 
+        int i = 500;
+        while (progressBar.getValue() > 0) {
+            progressBar.setValue(i);
+            progressBar.setString(i+"/500");
+            Thread.sleep(40);
+            i-= 1;
+        }
+    }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        if (e.getSource() == slider) {
-            label.setText("C "+slider.getValue());
-        }
 
     }
 }
