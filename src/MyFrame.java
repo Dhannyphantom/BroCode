@@ -1,32 +1,32 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MyFrame extends JFrame implements ActionListener {
-    JCheckBox checkBox;
     JPanel panel;
-    JButton button;
+    JRadioButton radio;
+    JRadioButton radio1;
+    JRadioButton radio2;
+    ButtonGroup buttonGroup;
     MyFrame() {
 
-        ImageIcon icon1 = new ImageIcon("assets/favicon.png");
-        ImageIcon icon2 = new ImageIcon("assets/x_icon.png");
+        radio = new JRadioButton("male");
+        radio1 = new JRadioButton("female");
+        radio2 = new JRadioButton("other");
 
+        radio.addActionListener(this);
+        radio1.addActionListener(this);
+        radio2.addActionListener(this);
 
-        button = new JButton("Submit");
-        button.addActionListener(this);
-
-
-        checkBox = new JCheckBox();
-        checkBox.setText("Are you a robot");
-        checkBox.setFocusable(false);
-        checkBox.setFont(new Font("MV Boli", Font.BOLD, 25));
-//        checkBox.setIcon(icon1);
-//        checkBox.setSelectedIcon(icon2);
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(radio);
+        buttonGroup.add(radio1);
+        buttonGroup.add(radio2);
 
         panel = new JPanel();
-        panel.add(checkBox);
-        panel.add(button);
+        panel.add(radio);
+        panel.add(radio1);
+        panel.add(radio2);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500,500);
@@ -37,12 +37,13 @@ public class MyFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == button) {
-            if (checkBox.isSelected()){
-                System.out.println("Yes you are a robot");
-            } else {
-                System.out.println("Of course you're not");
-            }
+        if (e.getSource() == radio) {
+            System.out.println("You're a guy");
+        } else if (e.getSource() == radio1) {
+            System.out.println("You're a lady");
+        } else if (e.getSource() == radio2) {
+            System.out.println("You're something else");
         }
+
     }
 }
