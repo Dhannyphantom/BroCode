@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 public class LaunchPage implements ActionListener {
     JButton button;
+    JFrame frame;
 
     LaunchPage() {
         button = new JButton();
@@ -12,7 +13,7 @@ public class LaunchPage implements ActionListener {
         button.addActionListener(this);
         button.setBounds(150,100, 100,60);
 
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,500);
         frame.setLayout(null);
