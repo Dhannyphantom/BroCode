@@ -1,21 +1,30 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-public class MyFrame extends JFrame implements ActionListener {
+public class MyFrame extends JFrame implements ChangeListener {
     JPanel panel;
-    JComboBox<String> comboBox;
-
+    JSlider slider;
+    JLabel label;
     MyFrame() {
 
-        String[] animals = {"cat", "dogs", "chicken", "rabbit"};
+        slider = new JSlider();
+        slider.setPaintTicks(true);
+        slider.setMinorTickSpacing(5);
+        slider.setBounds(200,0,60,300);
+        slider.setPaintLabels(true);
+        slider.addChangeListener(this);
+        slider.setOrientation(JSlider.VERTICAL);
+        slider.setMajorTickSpacing(25);
 
-        comboBox = new JComboBox<>(animals);
-        comboBox.addItem("goat");
-        comboBox.setEditable(true);
+        label = new JLabel();
+        label.setText("C "+slider.getValue());
+        label.setBounds(220,330,100,100);
 
         panel = new JPanel();
-        panel.add(comboBox);
+        panel.add(slider);
+        panel.add(label);
+        panel.setLayout(null);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500,500);
@@ -23,9 +32,12 @@ public class MyFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        if (e.getSource() == slider) {
+            label.setText("C "+slider.getValue());
+        }
 
     }
 }
