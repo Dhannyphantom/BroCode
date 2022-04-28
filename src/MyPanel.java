@@ -1,43 +1,45 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MyPanel extends JPanel {
+public class MyPanel extends JPanel implements ActionListener {
+    Image image;
+    Timer timer;
+    final int PANEL_SIZE = 500;
+    int xVelocity = 3;
+    int yVelocity = 1;
+    int x = 0;
+    int y= 0;
 
-    ImageIcon bgImage;
     MyPanel () {
-        this.setBounds(0,0,500,500);
-        bgImage = new ImageIcon("assets/Pin2.jpeg");
+        this.setPreferredSize(new Dimension(PANEL_SIZE,PANEL_SIZE));
+        this.setBackground(Color.black);
+
+        image = new ImageIcon("assets/favicon.png").getImage();
+        timer = new Timer(10,this);
+        timer.start();
     }
 
     public void paint (Graphics g) {
+        super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.drawImage(bgImage.getImage(),0,0,null);
+        g2d.drawImage(image,x,y,null);
+    }
 
-        g2d.setStroke(new BasicStroke(3));
-        g2d.setPaint(Color.orange);
-        g2d.drawLine(0,0,500,500);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (x > PANEL_SIZE - image.getWidth(null) || x < 0) {
+            xVelocity *= -1;
+        }
+        x += xVelocity;
 
-        g2d.setPaint(Color.blue);
-        g2d.drawRect(20,20,100,100);
-        g2d.fillRect(100,100,100,100);
+        if (y > PANEL_SIZE - image.getHeight(null) || y < 0) {
+            yVelocity *= -1;
+        }
+        y += yVelocity;
 
-        g2d.setPaint(Color.cyan);
-        g2d.drawOval(50,50,100,100);
-        g2d.fillOval(150,150,100,100);
-
-        g2d.setPaint(Color.red);
-        g2d.fillArc(350,20,100,100,0,180);
-        g2d.setPaint(Color.yellow);
-        g2d.fillArc(350,20,100,100,180,180);
-
-        g2d.setPaint(Color.gray);
-        int[] xPoints = {350,400,450};
-        int[] yPoints = {200,150,200};
-        g2d.fillPolygon(xPoints,yPoints,3);
-
-        g2d.setPaint(Color.pink);
-        g2d.setFont(new Font("Ink Free", Font.BOLD, 23));
-        g2d.drawString("Dhannyphantom", 250,250);
+        repaint();
     }
 }
