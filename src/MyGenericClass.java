@@ -1,4 +1,5 @@
-public class MyGenericClass <T, V> {
+public class MyGenericClass <T extends Number, V> {
+//    T extends Number limits T generics to only numbers such as Float,Byte,Integer, etc
     T tVal;
     V vVal;
 
