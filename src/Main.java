@@ -1,47 +1,39 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-//        THIS WILL SERIALIZE THE USER DATA
-       User user = new User();
-       user.name = "Daniel";
-       user.password = "qwerty";
+    public static void main(String[] args) {
 
-        FileOutputStream fileOut = new FileOutputStream("UserInfo.ser");
-        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-        objectOut.writeObject(user);
-        fileOut.close();
-        objectOut.close();
+        Timer timer = new Timer();
 
-        System.out.println("User info has been saved;");
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                for (int i = 10; i > 0; i--) {
+                    System.out.println(i + "seconds left");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                timer.cancel();
+                System.out.println("It's 12:20");
+            }
+        };
 
-//        IN ANOTHER PROJECT, YOU CAN NOW DESERIALIZE
-        /*
+        Calendar date = Calendar.getInstance();
+        date.set(Calendar.YEAR, 2022);
+        date.set(Calendar.MONTH, Calendar.APRIL);
+        date.set(Calendar.DAY_OF_MONTH, 30);
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 19);
+        date.set(Calendar.SECOND, 50);
+        date.set(Calendar.MILLISECOND, 0);
 
-        IN THAT NEW PROJECT YOU NEED TO CREATE THE EXACT SAME CLASS AS THE USER CLASS;
-        ========= IMPORTANT ===============
-        ============ IT MUST BE EXACT!!!!!! ====
-        SUCH THAT THE USER CLASS IN THIS PROJECT WILL HAVE THE
-            SAME VERSIONUID AS THE CLASS IN THE OTHER PROJECT
-
-        ============NOTE==================
-        TRANSIENT ATTRIBUTES OR METHODS WILL NOT BE SERIALIZED;
-
-        User user = null;
-
-        FileInputStream fileIn = new FileInputStream("C:\\Users\\PHANTOM\\Documents\\PHANTOM\\DOCS\\PROGRAMS\\JAVA\\BroCode\\UserInfo.ser");
-        ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-        user = (User) objectIn.readObject();
-        fileIn.close();
-        objectIn.close();
-
-        System.out.println(user.name);
-        System.out.println(user.password);
-        user.sayHello();
-
-         */
+//        timer.schedule(task,3000);
+        timer.scheduleAtFixedRate(task,date.getTime(),3000);
 
     }
 }
